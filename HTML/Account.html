@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WorkHive - Create Account</title>
+</head>
+<body>
+
+  <header>
+    <h1><a href="homepage.html">WorkHive</a></h1>
+    <nav>      
+      <a href="login.html">Login</a> |
+      <a href="Account.html">Sign Up</a> 
+    </nav>
+    <hr>
+  </header>
+  <h2>Create an Account!</h2>
+  <form action ="register.php" method = "post">
+    <label for ="name">First Name:</label><br>
+    <input type="text" id="id_name" name="name" required><br><br>
+    <label for ="surname">Last Name:</label><br>
+    <input type="text" id="id_surname" name="surname" required><br><br>
+    <label for ="email">Email:</label><br>
+    <input type="text" id="id_email" name="email" required><br><br>
+    <label for ="username">Username:</label><br>
+    <input type="text" id="id_username" name="username" required><br><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="id_password"name="password" required><br><br>
+    <label for="password">Confirm Password:</label><br>
+    <input type="password" id="id_confirmed_password"name="confirmed_password" required><br><br>
+    <input type="submit" value="Create Account">
+  </form>
+  <p>Already have an account? <a href="login.html">Login!</a></p>
+
+  <footer>
+    <hr>
+    <p>&copy; 2025 WorkHive. All rights reserved.</p>
+  </footer>
+</body>
+</html>
