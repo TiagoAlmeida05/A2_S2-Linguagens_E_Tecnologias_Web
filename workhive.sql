@@ -4,5 +4,23 @@ CREATE TABLE users (
   password TEXT NOT NULL,
   name TEXT NOT NULL,
   surname TEXT NOT NULL,
-  email TEXT NOT NULL
+  email TEXT NOT NULL,
+  is_admin INTEGER DEFAULT 0
+);
+
+CREATE TABLE categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE jobs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  category_id INTEGER NOT NULL,
+  price  DECIMAL(10,2) NOT NULL,
+  user_id INTEGER NOT NULL,
+
+  FOREIGN KEY (category_id) REFERENCES categories(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );

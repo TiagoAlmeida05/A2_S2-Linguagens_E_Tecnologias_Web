@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 try{
     $db = new PDO('sqlite:workhive.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,8 +13,10 @@ try{
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($user && password_verify($password, $user['password'])){
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $username;
-            header("Location: profile.php");
+            $_SESSION['is_admin'] = $user['is_admin'];
+            header("Location: homepage.php");
             exit();
         }else{
             echo "Invalid username or password.";
