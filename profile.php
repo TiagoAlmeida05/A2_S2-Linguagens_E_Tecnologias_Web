@@ -9,34 +9,51 @@ try {
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $newUsername = $_POST['username'];
-        $newName = $_POST["name"];
-        $newSurname = $_POST["surname"];
-        $newEmail = $_POST["email"];
-        $newPassword = $_POST["password"];
-        $newConfirmedPassword = $_POST["confirmed_password"];
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if (isset($_POST['update_profile'])) {
+            $newUsername = $_POST['username'];
+            $newName = $_POST["name"];
+            $newSurname = $_POST["surname"];
+            $newEmail = $_POST["email"];
+            $newPassword = $_POST["password"];
+            $newConfirmedPassword = $_POST["confirmed_password"];
 
-        if (!empty($newPassword)) {
-            if ($newPassword !== $newConfirmedPassword) {
-                echo "Passwords do not match. Try again.";
+            if (!empty($newPassword)) {
+                if ($newPassword !== $newConfirmedPassword) {
+                    echo "Passwords do not match. Try again.";
+                } else {
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $stmt = $db->prepare("UPDATE users SET username = ?, name = ?, surname = ?, email = ?, password = ? WHERE id = ?");
+                    $stmt->execute([$newUsername, $newName, $newSurname, $newEmail, $hashedPassword, $_SESSION['user_id']]);
+                }
             } else {
-                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                $stmt = $db->prepare("UPDATE users SET username = ?, name = ?, surname = ?, email = ?, password = ? WHERE id = ?");
-                $stmt->execute([$newUsername, $newName, $newSurname, $newEmail, $hashedPassword, $_SESSION['user_id']]);
+                $stmt = $db->prepare("UPDATE users SET username = ?, name = ?, surname = ?, email = ? WHERE id = ?");
+                $stmt->execute([$newUsername, $newName, $newSurname, $newEmail, $_SESSION['user_id']]);
             }
-        } else {
-            $stmt = $db->prepare("UPDATE users SET username = ?, name = ?, surname = ?, email = ? WHERE id = ?");
-            $stmt->execute([$newUsername, $newName, $newSurname, $newEmail, $_SESSION['user_id']]);
+
+            echo "Profile updated successfully!";
+            $_SESSION['username'] = $newUsername;
+
+            $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
+            $stmt->execute([$_SESSION['user_id']]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        echo "Profile updated successfully!";
-        $_SESSION['username'] = $newUsername;
+        if(isset($_POST['add_category']) && $_SESSION['is_admin'] == 1){
+            $newCategory = $_POST['category_name'];
+            $stmt = $db->prepare("INSERT INTO categories (name) VALUES (?)");
+            $stmt->execute([$newCategory]);
+            echo "Category added successfully!";
+        }
 
-        $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->execute([$_SESSION['user_id']]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(isset($_POST['promote_user']) && $_SESSION['is_admin'] == 1){
+            $promoteUsername = $_POST['promote_username'];
+            $stmt = $db->prepare("UPDATE users SET is_admin = 1 WHERE username = ?");
+            $stmt->execute([$promoteUsername]);
+            echo "User '$promoteUsername' has been promoted to admin";
+        }
     }
+
 } catch (PDOException $e) {
     echo "Database error: " . $e->getMessage();
 }
@@ -58,7 +75,22 @@ displayHeader();
         <input type="submit" value="Update Profile">
     </form>
 
-    <a href="homepage.php">Back to Home</a>
+    <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
+        <hr>
+        <h2>Admin Tools</h2>
+        <h3>Create a New Category</h3>
+        <form action="profile.php" method="POST">
+            <input type="hidden" name="add_category" value="1">
+            <label>New Category: <input type="text" name="category_name" required></label>
+            <input type="submit" value="Add Category">
+        </form>
+        <h3>Promote a User to Admin</h3>
+        <form action="profile.php" method="POST" style="margin-top: 10px;">
+            <input type="hidden" name="promote_user" value="1">
+            <label>Promote User (by Username): <input type="text" name="promote_username" required></label>
+            <input type="submit" value="Promote to Admin">
+        </form>
+    <?php endif;?>
 </body>
 </html>
 

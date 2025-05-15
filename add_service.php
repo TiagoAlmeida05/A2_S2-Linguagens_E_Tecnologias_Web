@@ -18,7 +18,7 @@ try{
         echo "Service added successfully!";       
     }
 
-    $stmr = $db->query("SELECT id, name FROM categorias");
+    $stmt = $db->query("SELECT id, name FROM categories");
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
  
 }catch(PDOException $e){

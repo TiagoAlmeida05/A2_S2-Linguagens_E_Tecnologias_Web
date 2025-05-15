@@ -16,7 +16,7 @@ try{
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $username;
             $_SESSION['is_admin'] = $user['is_admin'];
-            header("Location: homepage.php");
+            header("Location: profile.php");
             exit();
         }else{
             echo "Invalid username or password.";
