@@ -41,3 +41,35 @@
     <a href="register.php">Register</a>
   </form>
 <?php } ?>
+
+<?php function displayServices(){
+    try{
+        $db = new PDO('sqlite:workhive.db');
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $db->query("SELECT jobs.*, categories.name AS category_name, users.username AS listed_by
+            FROM jobs
+            JOIN categories ON jobs.category_id = categories.id
+            Join users ON jobs.user_id = users.id");
+        $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($services)){
+            echo "<p>No services available.</p>";
+            return;
+        }
+
+        echo "<h2>Available Services:</h2>";
+        echo "<div class='services-container'>";
+
+        foreach($services as $service){ ?>
+                <div class="service-card" style="border:1px solid #ccc; padding:10px; margin-bottom:15px; border-radius:6px;">                <h3><?php echo htmlspecialchars($service['name'])?></h3>
+                <p><strong>Category:</strong><?php echo htmlspecialchars($service['category_name'])?></p>
+                <p><strong>Price:</strong><?php echo htmlspecialchars($service['price'])?></p>
+                <p><strong>Description:</strong><?php echo htmlspecialchars($service['description'])?></p>
+                <p><strong>Listed by:</strong><?php echo htmlspecialchars($service['listed_by'])?></p>
+            </div>
+        <?php }   
+    } catch(PDOEXCEPTION $e){
+        echo "<p>Database error: ".$e->getMessage(). "</p>";
+    }
+}
+?>

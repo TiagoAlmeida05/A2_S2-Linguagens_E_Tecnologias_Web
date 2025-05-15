@@ -9,13 +9,13 @@ try{
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
         $price = $_POST['price'];
-        $user_id = $_POST['user_id'];       
+        $user_id = $_SESSION['user_id'];       
         $description = $_POST['description'];
 
-        $stmt = db->prepare("INSERT INTO jobs(name, description, category_id, price, user_id VALUES(?, ?, ?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO jobs(name, description, category_id, price, user_id) VALUES(?, ?, ?, ?, ?)");
         $stmt->execute([$name, $description, $category_id, $price, $user_id]);
 
-        echo "Service added successfully!";       
+        echo "Service added successfully!";   
     }
 
     $stmt = $db->query("SELECT id, name FROM categories");

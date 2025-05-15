@@ -7,6 +7,7 @@ if (isset($_SESSION['user_id'])): ?>
         <button type="button">Add a Service</button>
     </a>
 <?php endif;
+displayServices();
 displayFooter();
 ?>
 
