@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'utils.php';
 
-
+// Function to register a new user into the database
 function registerUser($username, $email, $password, $name, $role = 'client') {
     // Validate inputs
     if (empty($username) || empty($email) || empty($password)) {
@@ -43,6 +43,7 @@ function registerUser($username, $email, $password, $name, $role = 'client') {
     }
 }
 
+// Function to login a user that is in the database
 function loginUser($username, $password) {
     if (empty($username) || empty($password)) {
         return false;
@@ -71,6 +72,7 @@ function loginUser($username, $password) {
     }
 }
 
+// Function to get user details using his ID
 function getUserById($userId) {
     if (empty($userId)) {
         return false;
@@ -88,42 +90,7 @@ function getUserById($userId) {
     }
 }
 
-function updateUserProfile($userId, $data) {
-    if (empty($userId) || empty($data)) {
-        return false;
-    }
-    
-    $allowedFields = ['email', 'role'];
-    $updateData = [];
-    
-    foreach ($data as $field => $value) {
-        if (in_array($field, $allowedFields)) {
-            $updateData[$field] = $value;
-        }
-    }
-    
-    if (empty($updateData)) {
-        return false;
-    }
-    
-    try {
-        $db = getDB();
-        
-        $setClause = implode(', ', array_map(function($field) {
-            return "$field = ?";
-        }, array_keys($updateData)));
-        
-        $values = array_values($updateData);
-        $values[] = $userId;
-        
-        $stmt = $db->prepare("UPDATE Users SET $setClause WHERE id = ?");
-        
-        return $stmt->execute($values);
-    } catch (PDOException $e) {
-        return false;
-    }
-}
-
+// Function to update user password details
 function updateUserPassword($userId, $currentPassword, $newPassword) {
     if (empty($userId) || empty($currentPassword) || empty($newPassword)) {
         return false;

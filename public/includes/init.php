@@ -17,17 +17,28 @@ try {
             ('Mobile App Development', 'Apps for iOS and Android')
     ");
 
-    // Insert users
-    $db->exec("
-        INSERT INTO Users (username, email, password, role) VALUES
-            ('admin_user', 'admin@example.com', 'adminpass', 'admin'),
-            ('client_user', 'client@example.com', 'clientpass', 'client'),
-            ('freelancer1', 'freelancer1@example.com', 'pass123', 'freelancer'),
-            ('freelancer2', 'freelancer2@example.com', 'pass123', 'freelancer'),
-            ('freelancer3', 'freelancer3@example.com', 'pass123', 'freelancer'),
-            ('freelancer4', 'freelancer4@example.com', 'pass123', 'freelancer'),
-            ('freelancer5', 'freelancer5@example.com', 'pass123', 'freelancer')
+    $users = [
+        ['admin_user', 'admin@example.com', 'adminpass', 'admin'],
+        ['client_user', 'client@example.com', 'clientpass', 'client'],
+        ['freelancer1', 'freelancer1@example.com', 'pass123', 'freelancer'],
+        ['freelancer2', 'freelancer2@example.com', 'pass123', 'freelancer'],
+        ['freelancer3', 'freelancer3@example.com', 'pass123', 'freelancer'],
+        ['freelancer4', 'freelancer4@example.com', 'pass123', 'freelancer'],
+        ['freelancer5', 'freelancer5@example.com', 'pass123', 'freelancer'],
+    ];
+
+    $stmt = $db->prepare("
+        INSERT INTO Users (username, email, password, role)
+        VALUES (?, ?, ?, ?)
     ");
+
+    // Hash each and every user passwords
+    foreach ($users as $user) {
+        // Remember that "$user[2]" stores the user's password
+        $hashedPassword = password_hash($user[2], PASSWORD_DEFAULT);
+        // We will now create the actual user with the hashed password
+        $stmt->execute([$user[0], $user[1], $hashedPassword, $user[3]]);
+    }
 
     // Insert services (1 for each freelancer in different categories)
     $db->exec("

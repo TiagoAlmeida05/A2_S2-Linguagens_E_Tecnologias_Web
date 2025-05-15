@@ -1,17 +1,13 @@
 <?php
 require_once 'config.php';
 
-/**
- * Safely redirect to another page
- */
+// General function to be used for redirects
 function redirect($path) {
     header('Location: ' . SITE_URL . $path);
     exit;
 }
 
-/**
- * Validate and sanitize user input
- */
+// Sanitize input -> remove whitespace, slashes, and convert special characters for security
 function sanitizeInput($input) {
     $input = trim($input);
     $input = stripslashes($input);
@@ -19,37 +15,27 @@ function sanitizeInput($input) {
     return $input;
 }
 
-/**
- * Check if user is logged in
- */
+// Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-/**
- * Get current user ID
- */
+// Get current user ID
 function getCurrentUserId() {
     return isLoggedIn() ? $_SESSION['user_id'] : null;
 }
 
-/**
- * Display error message
- */
+// Display error message
 function displayError($message) {
     $_SESSION['error'] = $message;
 }
 
-/**
- * Display success message
- */
+// Display success message
 function displaySuccess($message) {
     $_SESSION['success'] = $message;
 }
 
-/**
- * Get flash messages and clear them
- */
+ // Get the popping messages and eventually clear them
 function getMessages() {
     $messages = [
         'error' => $_SESSION['error'] ?? null,

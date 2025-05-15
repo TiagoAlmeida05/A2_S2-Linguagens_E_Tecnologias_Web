@@ -403,6 +403,7 @@ main {
     color: var(--gray-dark);
     font-weight: 500;
     margin-bottom: 0rem;
+    font-size: 0.8rem;
 }
 
 .service-price {
