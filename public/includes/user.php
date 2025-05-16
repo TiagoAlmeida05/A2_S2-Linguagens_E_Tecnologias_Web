@@ -3,9 +3,9 @@ require_once 'config.php';
 require_once 'utils.php';
 
 // Function to register a new user into the database
-function registerUser($username, $email, $password, $name, $role = 'client') {
+function registerUser($username, $email, $password, $name) {
     // Validate inputs
-    if (empty($username) || empty($email) || empty($password)) {
+    if (empty($username) || empty($email) || empty($password) || empty($name)) {
         return false;
     }
     
@@ -14,10 +14,6 @@ function registerUser($username, $email, $password, $name, $role = 'client') {
         return false;
     }
     
-    // Validate role
-    if (!in_array($role, ['client', 'freelancer', 'admin'])) {
-        $role = 'client'; // Default to client if invalid role
-    }
     
     try {
         $db = getDB();
@@ -34,8 +30,8 @@ function registerUser($username, $email, $password, $name, $role = 'client') {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         // Insert user
-        $stmt = $db->prepare("INSERT INTO Users (username, email, password, role) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$username, $email, $hashedPassword, $role]);
+        $stmt = $db->prepare("INSERT INTO Users (username, email, password, name) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$username, $email, $hashedPassword, $name]);
         
         return $db->lastInsertId();
     } catch (PDOException $e) {
@@ -55,7 +51,7 @@ function loginUser($username, $password) {
         // Check if input is email or username
         $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         
-        $stmt = $db->prepare("SELECT id, username, email, password, role FROM Users WHERE $field = ?");
+        $stmt = $db->prepare("SELECT id, username, email, password, is_admin FROM Users WHERE $field = ?");
         $stmt->execute([$username]);
         
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -81,7 +77,7 @@ function getUserById($userId) {
     try {
         $db = getDB();
         
-        $stmt = $db->prepare("SELECT id, username, email, role, created_at FROM Users WHERE id = ?");
+        $stmt = $db->prepare("SELECT id, username, email, name, is_admin, created_at FROM Users WHERE id = ?");
         $stmt->execute([$userId]);
         
         return $stmt->fetch(PDO::FETCH_ASSOC);

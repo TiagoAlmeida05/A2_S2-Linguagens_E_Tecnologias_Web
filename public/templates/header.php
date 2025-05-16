@@ -21,7 +21,8 @@ require_once __DIR__ . '/../includes/utils.php';
             <nav>
                 <ul>
                     <?php if(isLoggedIn()): ?>
-                        <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">Services</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>/pages/add_job.php" class="auth-link">Add Service</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">Your Services</a></li>
                         <li><a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a></li>
                         <li><a href="<?php echo SITE_URL; ?>/pages/logout.php">Logout</a></li>
                     <?php else: ?>

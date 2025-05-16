@@ -11,14 +11,12 @@ if (isLoggedIn()) {
 $username = '';
 $email = '';
 $name = '';
-$role = 'client';
 
 // Restore old form data if validation failed, this ensures the user does not have to repeat everything from scratch
 if (!empty($_SESSION['form_data'])) {
     $username = $_SESSION['form_data']['username'] ?? '';
     $email = $_SESSION['form_data']['email'] ?? '';
     $name = $_SESSION['form_data']['name'] ?? '';
-    $role = $_SESSION['form_data']['role'] ?? 'client';
     unset($_SESSION['form_data']);
 }
 
@@ -29,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
     $name = sanitizeInput($_POST['name'] ?? '');
-    $role = sanitizeInput($_POST['role'] ?? 'client');
 
     $valid = true;
 
@@ -53,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $valid = false;
     // If all passes we register the user!
     } else {
-        $userId = registerUser($username, $email, $password, $name, $role);
+        $userId = registerUser($username, $email, $password, $name);
 
         if ($userId) {
             displaySuccess('Registration complete! Please login.');
@@ -72,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'username' => $username,
             'email' => $email,
             'name' => $name,
-            'role' => $role
         ];
         header('Location: /pages/register.php');
         exit;
@@ -109,18 +105,6 @@ include '../templates/header.php';
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-        </div>
-        
-        <div class="form-group">
-            <label>I want to:</label>
-            <div>
-                <label>
-                    <input type="radio" name="role" value="client" <?php echo ($role === 'client') ? 'checked' : ''; ?>> Hire Freelancers
-                </label>
-                <label>
-                    <input type="radio" name="role" value="freelancer" <?php echo ($role === 'freelancer') ? 'checked' : ''; ?>> Work as a Freelancer
-                </label>
-            </div>
         </div>
         
         <div class="form-group">

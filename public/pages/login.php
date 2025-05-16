@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['is_admin'] = $user['is_admin'];
             
             displaySuccess('Login successful!');
             redirect('/');

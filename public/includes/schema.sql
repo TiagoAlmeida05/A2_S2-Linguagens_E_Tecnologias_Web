@@ -1,10 +1,11 @@
 -- Users Table
 CREATE TABLE Users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    role TEXT DEFAULT 'client' CHECK(role IN ('client', 'freelancer', 'admin')),
+    is_admin INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

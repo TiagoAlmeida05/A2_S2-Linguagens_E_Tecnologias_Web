@@ -18,26 +18,26 @@ try {
     ");
 
     $users = [
-        ['admin_user', 'admin@example.com', 'adminpass', 'admin'],
-        ['client_user', 'client@example.com', 'clientpass', 'client'],
-        ['freelancer1', 'freelancer1@example.com', 'pass123', 'freelancer'],
-        ['freelancer2', 'freelancer2@example.com', 'pass123', 'freelancer'],
-        ['freelancer3', 'freelancer3@example.com', 'pass123', 'freelancer'],
-        ['freelancer4', 'freelancer4@example.com', 'pass123', 'freelancer'],
-        ['freelancer5', 'freelancer5@example.com', 'pass123', 'freelancer'],
+        ['João Gomes', 'admin_user', 'admin@example.com', 'adminpass', '1'],
+        ['João Baião', 'client_user', 'client@example.com', 'clientpass', '0'],
+        ['João Silva', 'freelancer1', 'freelancer1@example.com', 'pass123', '0'],
+        ['João Martins', 'freelancer2', 'freelancer2@example.com', 'pass123', '0'],
+        ['João Paiva', 'freelancer3', 'freelancer3@example.com', 'pass123', '0'],
+        ['João Almeida', 'freelancer4', 'freelancer4@example.com', 'pass123', '0'],
+        ['João Costa', 'freelancer5', 'freelancer5@example.com', 'pass123', '0'],
     ];
 
     $stmt = $db->prepare("
-        INSERT INTO Users (username, email, password, role)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO Users (name, username, email, password, is_admin)
+        VALUES (?, ?, ?, ?, ?)
     ");
 
     // Hash each and every user passwords
     foreach ($users as $user) {
         // Remember that "$user[2]" stores the user's password
-        $hashedPassword = password_hash($user[2], PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($user[3], PASSWORD_DEFAULT);
         // We will now create the actual user with the hashed password
-        $stmt->execute([$user[0], $user[1], $hashedPassword, $user[3]]);
+        $stmt->execute([$user[0], $user[1], $user[2], $hashedPassword, $user[4]]);
     }
 
     // Insert services (1 for each freelancer in different categories)
