@@ -6,7 +6,7 @@ require_once '../../includes/user.php';
 $db = getDB();
 
 // Get optional query parameters
-$userId = $_GET['user'] ?? null;
+$userId = getCurrentUserID() ?? null;
 $categoryId = $_GET['category'] ?? null;
 
 // Build base query
@@ -21,14 +21,14 @@ $query = "
 $conditions = [];
 $params = [];
 
-if ($userId) {
-    $conditions[] = "freelancer_id = ?";
-    $params[] = $userId;
-}
-
 if ($categoryId) {
+    // Filter by category only
     $conditions[] = "category_id = ?";
     $params[] = $categoryId;
+} elseif ($userId) {
+    // Only filter by user if category is NOT set
+    $conditions[] = "freelancer_id = ?";
+    $params[] = $userId;
 }
 
 if (!empty($conditions)) {
@@ -48,10 +48,8 @@ include_once '../../templates/header.php';
 <div class="featured-services">
     <div class="container">
         <?php 
-        if ($userId) {
-            echo '<h1 class="gradient-heading">Your Services</h1';
-        } elseif ($categoryId) {
-            // Fetch category name
+        if ($categoryId) {
+            // Show category name heading
             $stmt = $db->prepare("SELECT name FROM Categories WHERE id = ?");
             $stmt->execute([$categoryId]);
             $category = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -59,6 +57,8 @@ include_once '../../templates/header.php';
             if ($category) {
                 echo '<h1 class="gradient-heading">' . htmlspecialchars($category['name']) . "</h1>";
             }
+        } else{
+            echo '<h1 class="gradient-heading">Your Services</h1>';
         }
         ?>
         <?php if (empty($services)): ?>
