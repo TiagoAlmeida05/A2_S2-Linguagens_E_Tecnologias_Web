@@ -26,6 +26,8 @@ CREATE TABLE Services (
     price REAL NOT NULL,
     delivery_time INTEGER NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    image_path TEXT,
+    video_path TEXT,
     FOREIGN KEY (freelancer_id) REFERENCES Users(id),
     FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
@@ -62,4 +64,13 @@ CREATE TABLE Messages (
     sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES Users(id),
     FOREIGN KEY (receiver_id) REFERENCES Users(id)
-); 
+);
+
+-- Media Table
+CREATE TABLE ServiceMedia (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    service_id INTEGER NOT NULL,
+    type TEXT CHECK(type IN ('image', 'video')) NOT NULL,
+    file_path TEXT NOT NULL,
+    FOREIGN KEY (service_id) REFERENCES Services(id)
+);
