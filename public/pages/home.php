@@ -55,11 +55,6 @@ include_once '../templates/header.php';
     <div class="container">
         <h1>Find the perfect freelance services for your business</h1>
         <p>Hire skilled freelancers or offer your expert services to clients around the world.</p>
-        
-        <form action="<?php echo SITE_URL; ?>/pages/services/list.php" method="get" class="search-form">
-            <input type="text" name="search" placeholder="Search for services..." class="form-control">
-            <button type="submit" class="btn">Search</button>
-        </form>
     </div>
 </div>
 
@@ -122,5 +117,5 @@ include_once '../templates/header.php';
 
 <!-- Open container again for footer -->
 <div class="container">
-
+<script src="<?php echo SITE_URL; ?>/assets/js/search.js"></script>
 <?php include_once '../templates/footer.php'; ?> 

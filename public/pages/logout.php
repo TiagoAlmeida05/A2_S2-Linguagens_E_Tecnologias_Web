@@ -19,5 +19,5 @@ session_destroy();
 
 // Redirect to login page
 displaySuccess('You have been logged out successfully.');
-redirect('/pages/login.php');
+redirect('/pages/home.php');
 ?> 

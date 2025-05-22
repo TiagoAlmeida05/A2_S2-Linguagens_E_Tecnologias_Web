@@ -20,11 +20,19 @@ require_once __DIR__ . '/../includes/utils.php';
             </a>
             <nav>
                 <ul>
+                                            <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">All Services</a></li>
                     <?php if(isLoggedIn()): ?>
                         <li><a href="<?php echo SITE_URL; ?>/pages/add_job.php" class="auth-link">Add Service</a></li>
-                        <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">Your Services</a></li>
-                        <li><a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a></li>
-                        <li><a href="<?php echo SITE_URL; ?>/pages/logout.php">Logout</a></li>
+                        <div class="dropdown">
+                        <button class="dropdown-toggle" type="button">
+                            ☰ Options
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a>
+                            <a href="<?php echo SITE_URL; ?>/pages/services/list.php?mine=1">My Services</a>
+                            <a href="<?php echo SITE_URL; ?>/pages/logout.php" class="logout-link">Logout</a>
+                        </div>
+                    </div>
                     <?php else: ?>
                         <li><a href="<?php echo SITE_URL; ?>/pages/login.php" class="auth-link">Login</a></li>
                         <li><a href="<?php echo SITE_URL; ?>/pages/register.php" class="auth-link">Register</a></li>

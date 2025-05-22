@@ -31,3 +31,4 @@
     </footer>
 </body>
 </html> 
+<script src="<?php echo SITE_URL; ?>/assets/js/dropdown.js"></script>

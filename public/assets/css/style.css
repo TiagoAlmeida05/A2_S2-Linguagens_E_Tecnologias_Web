@@ -317,6 +317,116 @@ main {
     border-radius: 8px;
 }
 
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: var(--white);
+}
+
+.review-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5em;
+    color: var(--text-dark);
+}
+
+.review-form label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.review-form textarea,
+.review-form select {
+    border: none;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    outline: none;
+    background-color: var(--gray-light);
+    resize: vertical;
+    transition: background-color 0.2s;
+}
+
+.review-form textarea:focus,
+.review-form select:focus {
+    background-color: #f1f1f1;
+}
+
+.review-form button {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-form button:before {
+    border-radius: 8px;
+    content: "";
+    width: 0;
+    height: 100%;
+    background: var(--gray-light);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+.review-form button:hover:before {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.review-form button:hover {
+    color: var(--primary);
+}
+
+.service-reviews {
+    margin: 3rem auto;
+    max-width: 600px;
+}
+
+.service-reviews h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.review-card {
+    background-color: var(--white);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.review-meta {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.review-comment {
+    font-style: italic;
+    color: var(--text-medium);
+    margin: 0.5rem 0 0;
+}
+
 /*-- -------------------------- -->
 <---         Categories         -->
 <--- -------------------------- -*/
@@ -649,6 +759,181 @@ main {
 
 .radio-group input[type="radio"] {
     margin-right: 0.5rem;
+}
+
+/* Dropdown Style*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.dropdown-toggle {
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0 1rem;
+    line-height: 2.5rem;
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+    transition: color 0.3s;
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.dropdown-toggle:before {
+    border-radius: 8px;
+    content: "";
+    width: 0;
+    height: 100%;
+    background: var(--primary-dark);
+    opacity: 1;
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+.dropdown-toggle:hover {
+    color: var(--white);
+}
+
+.dropdown-toggle:hover:before {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    min-width: 180px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu label {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.dropdown-menu .logout-link {
+    color: #e63946;
+    font-weight: 600;
+}
+
+.dropdown-menu .logout-link:hover {
+    background-color: #e63946;
+    color: var(--white);
+}
+
+#apply-filters {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+}
+
+#apply-filters:hover {
+    background-color: var(--primary-dark);
+}
+
+/*Search Bar*/
+.search-bar {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px 15px;
+  width: 300px;
+  max-width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Filters */
+.service-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0 40px;
+}
+
+.service-filters div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.service-filters label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.service-filters input[type="number"],
+.service-filters select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.service-filters .btn {
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #5b76f7, #6ce0f0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.service-filters .btn:hover {
+  background: linear-gradient(90deg, #4562d6, #54c8d3);
 }
 
 /* Footer */
