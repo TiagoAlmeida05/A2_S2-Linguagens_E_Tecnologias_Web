@@ -62,8 +62,10 @@ CREATE TABLE Messages (
     receiver_id INTEGER NOT NULL,
     content TEXT NOT NULL,
     sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    service_id  INTEGER NOT NULL,
     FOREIGN KEY (sender_id) REFERENCES Users(id),
-    FOREIGN KEY (receiver_id) REFERENCES Users(id)
+    FOREIGN KEY (receiver_id) REFERENCES Users(id),
+    FOREIGN KEY (service_id)  REFERENCES Services(id)
 );
 
 -- Media Table

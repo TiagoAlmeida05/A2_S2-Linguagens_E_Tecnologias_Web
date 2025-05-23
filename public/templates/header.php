@@ -1,4 +1,4 @@
-<?php 
+<?php  
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/utils.php';
 ?>
@@ -20,19 +20,38 @@ require_once __DIR__ . '/../includes/utils.php';
             </a>
             <nav>
                 <ul>
-                                            <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">All Services</a></li>
+                    <?php if (isLoggedIn()): ?>
+                        <li>
+                            <a href="<?php echo SITE_URL; ?>/pages/messages.php" title="Inbox">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">All Services</a></li>
                     <?php if(isLoggedIn()): ?>
                         <li><a href="<?php echo SITE_URL; ?>/pages/add_job.php" class="auth-link">Add Service</a></li>
                         <div class="dropdown">
-                        <button class="dropdown-toggle" type="button">
-                            ☰ Options
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a>
-                            <a href="<?php echo SITE_URL; ?>/pages/services/list.php?mine=1">My Services</a>
-                            <a href="<?php echo SITE_URL; ?>/pages/logout.php" class="logout-link">Logout</a>
+                            <button class="dropdown-toggle" type="button">
+                                ☰ Options
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a>
+                                <a href="<?php echo SITE_URL; ?>/pages/services/list.php?mine=1">My Services</a>
+                                <a href="<?php echo SITE_URL; ?>/pages/services/paid_services.php">Paid Services</a>
+
+                                <!-- Added My Messages button -->
+                                <a href="<?php echo SITE_URL; ?>/pages/messages.php" style="display: inline-flex; align-items: center;">
+                                    My Messages
+                                    <?php
+                                    // Optional: If you want to show unread count badge here, add the logic to get totalUnread before including this header
+                                    if (isset($totalUnread) && $totalUnread > 0): ?>
+                                        <span class="badge"><?php echo $totalUnread; ?></span>
+                                    <?php endif; ?>
+                                </a>
+
+                                <a href="<?php echo SITE_URL; ?>/pages/logout.php" class="logout-link">Logout</a>
+                            </div>
                         </div>
-                    </div>
                     <?php else: ?>
                         <li><a href="<?php echo SITE_URL; ?>/pages/login.php" class="auth-link">Login</a></li>
                         <li><a href="<?php echo SITE_URL; ?>/pages/register.php" class="auth-link">Register</a></li>
@@ -78,4 +97,4 @@ require_once __DIR__ . '/../includes/utils.php';
     <?php endif; ?>
     
     <main>
-        <div class="container"> 
+        <div class="container">

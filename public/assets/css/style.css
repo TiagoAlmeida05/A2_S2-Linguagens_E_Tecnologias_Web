@@ -744,6 +744,24 @@ main {
   margin-top: 10px;
 }
 
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:before {
+  background: #c82333;
+}
+
+.btn-danger:hover {
+  color: #fff;
+}
+
+.btn-danger:hover:before {
+  width: 100%;
+}
+
 .radio-group {
     display: flex;
     gap: 1rem;
