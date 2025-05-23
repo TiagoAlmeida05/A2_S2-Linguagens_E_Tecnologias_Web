@@ -893,6 +893,219 @@ main {
 #apply-filters:hover {
     background-color: var(--primary-dark);
 }
+/*Messages*/
+.message {
+  background: #f1f1f1;
+  border-radius: 12px;
+  padding: 12px 16px;
+  max-width: 70%;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+  line-height: 1.4;
+  position: relative;
+}
+
+.message.sent {
+  background: #d1e7dd;
+  margin-left: auto;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.message.received {
+  background: #f8d7da; 
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.message.sent::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 8px solid #d1e7dd;
+  border-bottom: 8px solid transparent;
+}
+
+.message.received::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 8px solid #f8d7da;
+  border-bottom: 8px solid transparent;
+}
+
+.messages-board {
+  display: flex;
+  max-width: 1200px;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  min-height: 600px;
+  height: 600px;
+}
+
+.users-sidebar {
+  width: 280px;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+  overflow-y: auto; 
+}
+
+.conversation-panel {
+  flex: 1; 
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden; 
+}
+
+#conversation-title {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.messages-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+  word-wrap: break-word;
+}
+
+#message-form {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  margin-top: auto;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  width: 100%;
+  gap: 12px;
+}
+
+#message-content {
+  flex: 1;                 
+  height: 40px;            
+  max-height: 200px;       
+  padding: 10px 15px;      
+  border: 2px solid #007bff; 
+  border-radius: 8px;      
+  resize: vertical;       
+  font-size: 16px;         
+  font-family: inherit;    
+  overflow-y: auto;        
+  box-sizing: border-box;  
+  outline: none;           
+  transition: border-color 0.3s ease;
+  width: 90%;
+  min-width: 0;
+}
+
+#message-form button {
+  flex-shrink: 0;      
+  padding: 12px 20px;
+  height: 40px;         
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  white-space: nowrap; 
+  user-select: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+#message-form button:hover {
+  background-color: #218838;
+}
+
+#start-new-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#start-new-btn:hover {
+  background: #0056b3;
+}
+
+#new-user-list {
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.users-sidebar ul {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-left: 0;
+}
+
+.user-link {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.user-link:hover {
+  background-color: #e9ecef;
+  color: #007bff;
+}
+
+.messages-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.messages-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.badge {
+  background-color: #ff4136;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 7px;
+  font-size: 12px;
+  margin-left: 6px;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
 
 /*Search Bar*/
 .search-bar {
