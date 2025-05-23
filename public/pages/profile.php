@@ -62,33 +62,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             redirect('/pages/profile.php');
         }
     }
-    // Handle admin actions: Add Category
-    if (isset($_POST['add_category']) && $user['is_admin']) {
-        $categoryName = sanitizeInput($_POST['category_name']);
-        $categoryDesc = sanitizeInput($_POST['category_description']);
-
-        if (!$categoryName) {
-            displayError('Category name is required.');
-        } else {
-            $db = getDB();
-            $stmt = $db->prepare("INSERT INTO Categories (name, description) VALUES (?, ?)");
-            $stmt->execute([$categoryName, $categoryDesc]);
-
-            displaySuccess('Category added!');
-            redirect('/pages/profile.php');
-        }
-    }
-    // Handle admin actions: Promote user to admin
-    if (isset($_POST['promote_user']) && $user['is_admin']) {
-        $usernameToPromote = $_POST['username'];
-
-        $db = getDB();
-        $stmt = $db->prepare("UPDATE Users SET is_admin = 1 WHERE username = ?");
-        $stmt->execute([$usernameToPromote]);
-
-        displaySuccess('User promoted to admin!');
-        redirect('/pages/profile.php');
-    }
 }
 
 
@@ -155,42 +128,4 @@ include_once '../templates/header.php';
         </form>
     </div>
 </div>
-<?php if ($user['is_admin']): ?>
-
-    <div class="profile-container">
-        <h1 class="gradient-heading">Admin Tools</h1>
-
-        <div class="profile-section">
-            <h2>Create New Category</h2>
-
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="category_name">Category Name</label>
-                    <input type="text" name="category_name" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="category_description">Description</label>
-                    <input type="text" name="category_description" class="form-control" required>
-                </div>
-
-                <button type="submit" name="add_category" class="btn btn-block">Add Category</button>
-            </form>
-        </div>
-
-        <div class="profile-section">
-            <h2>Promote User to Admin</h2>
-
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" required>
-                </div>
-
-                <button type="submit" name="promote_user" class="btn btn-block">Promote</button>
-            </form>
-        </div>
-    </div>
-<?php endif; ?>
-
 <?php include_once '../templates/footer.php'; ?>

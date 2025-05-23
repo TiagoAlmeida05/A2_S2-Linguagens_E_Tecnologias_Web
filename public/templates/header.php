@@ -1,6 +1,24 @@
 <?php  
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/utils.php';
+$currentUser = null;
+$currentUserId = getCurrentUserId();
+if ($currentUserId) {
+    $currentUser = getUserById($currentUserId);
+
+    // Fetch unread message count
+    $db = getDB();
+    $stmt = $db->prepare("
+        SELECT COUNT(*) AS unread_count
+        FROM Messages
+        WHERE receiver_id = ? AND is_read = 0
+    ");
+    $stmt->execute([$currentUserId]);
+    $unreadResult = $stmt->fetch(PDO::FETCH_ASSOC);
+    $totalUnread = $unreadResult['unread_count'] ?? 0;
+} else {
+    $totalUnread = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +42,11 @@ require_once __DIR__ . '/../includes/utils.php';
                         <li>
                             <a href="<?php echo SITE_URL; ?>/pages/messages.php" title="Inbox">
                                 <i class="fa fa-envelope"></i>
+                                <?php
+                                    // Optional: If you want to show unread count badge here, add the logic to get totalUnread before including this header
+                                    if (isset($totalUnread) && $totalUnread > 0): ?>
+                                        <span class="badge"><?php echo $totalUnread; ?></span>
+                                <?php endif; ?>
                             </a>
                         </li>
                     <?php endif; ?>
@@ -36,18 +59,12 @@ require_once __DIR__ . '/../includes/utils.php';
                             </button>
                             <div class="dropdown-menu">
                                 <a href="<?php echo SITE_URL; ?>/pages/profile.php">Profile</a>
+                                <?php if ($currentUser['is_admin']): ?>
+                                  <a href="<?php echo SITE_URL; ?>/pages/admin_tools.php">Admin Tools</a>
+                                <?php endif; ?>
                                 <a href="<?php echo SITE_URL; ?>/pages/services/list.php?mine=1">My Services</a>
                                 <a href="<?php echo SITE_URL; ?>/pages/services/paid_services.php">Paid Services</a>
 
-                                <!-- Added My Messages button -->
-                                <a href="<?php echo SITE_URL; ?>/pages/messages.php" style="display: inline-flex; align-items: center;">
-                                    My Messages
-                                    <?php
-                                    // Optional: If you want to show unread count badge here, add the logic to get totalUnread before including this header
-                                    if (isset($totalUnread) && $totalUnread > 0): ?>
-                                        <span class="badge"><?php echo $totalUnread; ?></span>
-                                    <?php endif; ?>
-                                </a>
 
                                 <a href="<?php echo SITE_URL; ?>/pages/logout.php" class="logout-link">Logout</a>
                             </div>
