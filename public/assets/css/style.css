@@ -342,19 +342,20 @@ main {
 
 .review-form textarea,
 .review-form select {
-    border: none;
-    padding: 15px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    outline: none;
-    background-color: var(--gray-light);
-    resize: vertical;
-    transition: background-color 0.2s;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  outline: none;
+  resize: vertical;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 .review-form textarea:focus,
 .review-form select:focus {
-    background-color: #f1f1f1;
+  background-color: #f9f9f9;
+  border-color: var(--primary);
 }
 
 .review-form button {
