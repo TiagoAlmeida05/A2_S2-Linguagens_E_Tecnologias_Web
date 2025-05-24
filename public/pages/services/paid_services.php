@@ -108,13 +108,13 @@ include_once __DIR__ . '/../../templates/header.php';
 
             <?php if ($s['transaction_status'] !== 'cancelled'): ?>
               <div style="text-align:center; margin-top:0.5rem;">
-                <form method="POST">
+                <form method="POST" class="cancel-form">
                   <input type="hidden" name="cancel_tx_id" value="<?php echo $s['transaction_id']; ?>">
                   <button type="submit" class="btn btn-danger">Cancel Transaction</button>
                 </form>
               </div>
             <?php else: ?>
-              <div style="text-align:center; margin-top:0.5rem;">
+              <div style="text-align:center; margin-top:0.5rem;" class="cancelled">
                 <span style="color:#dc3545; font-weight:600;">Cancelled</span>
               </div>
             <?php endif; ?>

@@ -63,6 +63,10 @@ a:hover {
     color: var(--primary-dark);
 }
 
+ul {
+    list-style-type: none
+}
+
 /*-- -------------------------- -->
 <---          Header            -->
 <--- -------------------------- -*/
@@ -769,10 +773,18 @@ main {
   margin-top: 10px;
 }
 
+.cancel-form {
+    align-items: left;
+    max-width: 10.875rem;
+}
+
 .btn-danger {
+  font-size: 0.8rem;
+  font-weight: 800;
   background-color: #dc3545;
   border-color: #dc3545;
   color: #fff;
+  margin-left: 0px !important;
 }
 
 .btn-danger:before {
@@ -787,6 +799,9 @@ main {
   width: 100%;
 }
 
+.cancelled {
+  max-width: 10.875rem;
+}
 .radio-group {
     display: flex;
     gap: 1rem;
@@ -1755,3 +1770,4 @@ main {
     overflow: visible !important;
     max-height: none !important;
 } 
+
