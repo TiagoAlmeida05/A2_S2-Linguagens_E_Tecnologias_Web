@@ -8,6 +8,7 @@ $db = getDB();
 $userId = getCurrentUserID() ?? null;
 $categoryId = $_GET['category'] ?? null;
 $showMine = isset($_GET['mine']) && $_GET['mine'] == 1;
+$searchQuery = $_GET['search'] ?? '';
 
 $query = "
     SELECT Services.*, Categories.name AS category_name, Users.username AS freelancer_name
@@ -25,6 +26,11 @@ if ($categoryId) {
 } elseif ($showMine && $userId) {
     $conditions[] = "freelancer_id = ?";
     $params[] = $userId;
+}
+
+if ($searchQuery) {
+    $conditions[] = "Services.title LIKE ?";
+    $params[] = "%$searchQuery%";
 }
 
 if (!empty($conditions)) {
@@ -50,36 +56,36 @@ include_once '../../templates/header.php';
                 echo '<h1 class="gradient-heading">' . htmlspecialchars($category['name']) . '</h1>';
                 ?>
                 <div class="search-bar">
-                <input type="text" id="serviceSearch" placeholder="Search services by title...">
-            </div>
-
-            <form id="filterForm" class="service-filters">
-                <div>
-                    <label for="min_price">Min Price:</label>
-                    <input type="number" id="min_price" placeholder="0">
+                    <input type="text" id="serviceSearch" placeholder="Search services by title..." value="<?php echo htmlspecialchars($searchQuery); ?>">
                 </div>
 
-                <div>
-                    <label for="max_price">Max Price:</label>
-                    <input type="number" id="max_price" placeholder="999">
-                </div>
+                <form id="filterForm" class="service-filters">
+                    <div>
+                        <label for="min_price">Min Price:</label>
+                        <input type="number" id="min_price" placeholder="0">
+                    </div>
 
-                <div>
-                    <label for="order">Order By Price:</label>
-                    <select id="order">
-                        <option value="">-- Select --</option>
-                        <option value="asc">Low to High</option>
-                        <option value="desc">High to Low</option>
-                    </select>
-                </div>
-            </form>
-            <?php
+                    <div>
+                        <label for="max_price">Max Price:</label>
+                        <input type="number" id="max_price" placeholder="999">
+                    </div>
+
+                    <div>
+                        <label for="order">Order By Price:</label>
+                        <select id="order">
+                            <option value="">-- Select --</option>
+                            <option value="asc">Low to High</option>
+                            <option value="desc">High to Low</option>
+                        </select>
+                    </div>
+                </form>
+                <?php
             }
         } elseif ($showMine && $userId) {
             echo '<h1 class="gradient-heading">My Services</h1>';
             ?>
             <div class="search-bar">
-                <input type="text" id="serviceSearch" placeholder="Search services by title...">
+                <input type="text" id="serviceSearch" placeholder="Search services by title..." value="<?php echo htmlspecialchars($searchQuery); ?>">
             </div>
 
             <form id="filterForm" class="service-filters">
@@ -120,7 +126,7 @@ include_once '../../templates/header.php';
             echo '<h1 class="gradient-heading">All Services</h1>';
             ?>
             <div class="search-bar">
-                <input type="text" id="serviceSearch" placeholder="Search services by title...">
+                <input type="text" id="serviceSearch" placeholder="Search services by title..." value="<?php echo htmlspecialchars($searchQuery); ?>">
             </div>
 
             <form id="filterForm" class="service-filters">

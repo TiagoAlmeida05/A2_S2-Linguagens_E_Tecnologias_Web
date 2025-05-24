@@ -52,7 +52,7 @@ if ($currentUserId) {
                     <?php endif; ?>
                     <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">All Services</a></li>
                     <?php if(isLoggedIn()): ?>
-                        <li><a href="<?php echo SITE_URL; ?>/pages/add_job.php" class="auth-link">Add Service</a></li>
+                        <li><button onclick="window.location.href='<?php echo SITE_URL; ?>/pages/add_job.php'" class="add-service">Add Service</button></li>
                         <div class="dropdown">
                             <button class="dropdown-toggle" type="button">
                                 ☰ Options

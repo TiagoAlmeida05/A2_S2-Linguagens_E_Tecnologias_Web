@@ -83,7 +83,6 @@ include_once '../../templates/header.php';
     font-size: 1rem;
 }
 .payment-container .btn {
-    padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border-radius: 4px;
     text-decoration: none;
@@ -107,6 +106,7 @@ include_once '../../templates/header.php';
 }
 .payment-container .btn-cancel:hover {
     background-color: #f8f9fa;
+    color: #FFF;
 }
 </style>
 

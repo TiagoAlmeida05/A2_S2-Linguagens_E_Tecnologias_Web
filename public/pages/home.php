@@ -55,6 +55,9 @@ include_once '../templates/header.php';
     <div class="container">
         <h1>Find the perfect freelance services for your business</h1>
         <p>Hire skilled freelancers or offer your expert services to clients around the world.</p>
+        <form action="<?php echo SITE_URL; ?>/pages/services/list.php" method="GET" class="search-bar">
+            <input type="text" id="serviceSearch" name="search" placeholder="Search for services...">
+        </form>
     </div>
 </div>
 

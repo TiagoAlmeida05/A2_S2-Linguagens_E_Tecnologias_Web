@@ -105,6 +105,7 @@ header .container {
 nav ul {
     display: flex;
     list-style: none;
+    align-items: center;
 }
 
 nav ul li {
@@ -253,6 +254,26 @@ main {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0.9;
+}
+
+.hero .search-bar {
+    max-width: 600px;
+    margin: 2rem auto 0;
+}
+
+.hero .search-bar input[type="text"] {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.hero .search-bar input[type="text"]:focus {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .search-form {
@@ -666,6 +687,7 @@ main {
     font-weight: 700;
     min-width: 10.875rem;
     margin: auto;
+    margin-left: 0px !important;
     color: var(--secondary);
     padding: 0 1.5rem;
     /* prevents padding and border from affecting height and width */
@@ -778,6 +800,49 @@ main {
 
 .radio-group input[type="radio"] {
     margin-right: 0.5rem;
+}
+
+.add-service {
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0 1rem;
+    line-height: 2.5rem;
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+    transition: color 0.3s;
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.add-service:before {
+    border-radius: 8px;
+    content: "";
+    width: 0;
+    height: 100%;
+    background: var(--primary-dark);
+    opacity: 1;
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s;
+    z-index: -1;
+}
+
+.add-service:hover {
+    color: var(--white);
+}
+
+.add-service:hover:before {
+    width: 100%;
+    border-radius: 8px;
 }
 
 /* Dropdown Style*/
