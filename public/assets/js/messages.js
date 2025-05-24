@@ -129,5 +129,27 @@
     }, 5000);
   }
 
+  // Handle user search
+  const userSearchInput = document.getElementById('user-search-input');
+  const userList = document.querySelector('#new-user-list ul');
+
+  if (userSearchInput) {
+    userSearchInput.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const userLinks = userList.getElementsByClassName('user-link');
+      
+      Array.from(userLinks).forEach(link => {
+        const username = link.textContent.toLowerCase();
+        const listItem = link.parentElement;
+        
+        if (username.includes(searchTerm)) {
+          listItem.style.display = '';
+        } else {
+          listItem.style.display = 'none';
+        }
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', init);
 })();

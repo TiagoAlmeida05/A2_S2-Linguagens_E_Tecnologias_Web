@@ -115,4 +115,17 @@ function updateUserPassword($userId, $currentPassword, $newPassword) {
         return false;
     }
 }
+
+function getUserByEmail($email) {
+    try {
+        $db = getDB();
+        
+        $stmt = $db->prepare("SELECT * FROM Users WHERE email = ?");
+        $stmt->execute([$email]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        return false;
+    }
+}
 ?> 

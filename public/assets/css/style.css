@@ -84,7 +84,7 @@ header .container {
 }
 
 .logo {
-    height: 32px;
+    height: 6vh;
     width: auto;
 }
 
@@ -727,7 +727,9 @@ main {
 
 .btn-block {
     display: flex;
-    width: 50%;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .btn-primary {
@@ -1024,7 +1026,9 @@ main {
   padding: 20px;
   border-right: 1px solid #ddd;
   background: #f9f9f9;
-  overflow-y: auto; 
+  /* Remove overflow-y and max-height to prevent outer scroll bar */
+  /* overflow-y: auto; */
+  /* max-height: 100%; */
 }
 
 .conversation-panel {
@@ -1104,28 +1108,93 @@ main {
 }
 
 #start-new-btn {
-  display: block;
-  width: 100%;
-  padding: 10px 0;
-  margin-top: 20px;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+#start-new-btn:before {
+    content: "";
+    width: 0;
+    height: 100%;
+    background: var(--primary-dark);
+    opacity: 1;
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s;
+    z-index: -1;
+    border-radius: 8px;
 }
 
 #start-new-btn:hover {
-  background: #0056b3;
+    color: var(--white);
+}
+
+#start-new-btn:hover:before {
+    width: 100%;
 }
 
 #new-user-list {
-  margin-top: 1rem;
-  max-height: 200px;
-  overflow-y: auto;
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#new-user-search {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--gray);
+    margin-bottom: 0.5rem;
+}
+
+#new-user-search input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+#new-user-search input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+#new-user-list li {
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+#new-user-list li:hover {
+    background-color: var(--gray-light);
+}
+
+#new-user-list .user-link {
+    color: var(--secondary);
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+#new-user-list .user-link:hover {
+    color: var(--primary);
 }
 
 .users-sidebar ul {
@@ -1622,4 +1691,67 @@ main {
     #footer-1390 .cs-bottom {
         justify-content: flex-start;
     }
+}
+
+.social-login {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.social-login p {
+    color: var(--gray-dark);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.social-login p::before,
+.social-login p::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background-color: var(--gray);
+}
+
+.social-login p::before {
+    left: 0;
+}
+
+.social-login p::after {
+    right: 0;
+}
+
+.google-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #757575;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    width: 100%;
+    max-width: 300px;
+}
+
+.google-btn:hover {
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.google-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+#new-user-list ul {
+    overflow: visible !important;
+    max-height: none !important;
 } 

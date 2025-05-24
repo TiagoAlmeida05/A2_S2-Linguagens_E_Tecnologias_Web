@@ -14,10 +14,12 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destroy the session
+// Destroy session and show success alert
+session_start();
+session_unset();
 session_destroy();
 
 // Redirect to login page
 displaySuccess('You have been logged out successfully.');
-redirect('/pages/home.php');
+redirect('/pages/login.php');
 ?> 

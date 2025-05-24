@@ -34,7 +34,7 @@ if ($currentUserId) {
     <header>
         <div class="container">
             <a href="<?php echo SITE_URL; ?>/" class="site-title">
-                <img src="<?php echo SITE_URL; ?>/assets/svgs/logo.svg" alt="Freelance Marketplace Logo" class="logo">
+                <img src="<?php echo SITE_URL; ?>/assets/images/logo-light.png" alt="Freelance Marketplace Logo" class="logo">
             </a>
             <nav>
                 <ul>
@@ -52,7 +52,7 @@ if ($currentUserId) {
                     <?php endif; ?>
                     <li><a href="<?php echo SITE_URL; ?>/pages/services/list.php">All Services</a></li>
                     <?php if(isLoggedIn()): ?>
-                        <li><button onclick="window.location.href='<?php echo SITE_URL; ?>/pages/add_job.php'" class="add-service">Add Service</button></li>
+                        <li><button onclick="window.location.href='<?php echo SITE_URL; ?>/pages/services/add_job.php'" class="add-service">Add Service</button></li>
                         <div class="dropdown">
                             <button class="dropdown-toggle" type="button">
                                 ☰ Options

@@ -60,15 +60,20 @@ include_once '../templates/header.php';
         </ul>
 
         <button id="start-new-btn">Start New Conversation</button>
-        <ul id="new-user-list" style="display:none; margin-top:1rem;">
-            <?php foreach ($newUsers as $user): ?>
-                <li>
-                    <a href="#" class="user-link" data-id="<?php echo $user['id']; ?>">
-                        <?php echo htmlspecialchars($user['username']); ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <div id="new-user-list" style="display:none;">
+            <div id="new-user-search">
+                <input type="text" placeholder="Search users..." id="user-search-input">
+            </div>
+            <ul>
+                <?php foreach (array_slice($newUsers, 0, 30) as $user): ?>
+                    <li>
+                        <a href="#" class="user-link" data-id="<?php echo $user['id']; ?>">
+                            <?php echo htmlspecialchars($user['username']); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
     <div class="conversation-panel">
         <h3 id="conversation-title">Select a conversation</h3>

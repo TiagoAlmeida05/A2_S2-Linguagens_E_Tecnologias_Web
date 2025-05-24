@@ -3,6 +3,18 @@ require_once '../includes/config.php';
 require_once '../includes/utils.php';
 require_once '../includes/user.php';
 
+// Google Auth
+require __DIR__ . "/../vendor/autoload.php";
+
+// Initialize Google Client
+$client = new Google\Client;
+$client->setClientId('345371216571-p2r3fof3jb5r4m0s3vm3me6sklru2mje.apps.googleusercontent.com');
+$client->setClientSecret('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');
+$client->setRedirectUri('http://localhost:9000/google-redirect.php');
+$client->addScope('email');
+$client->addScope('profile');
+$googleAuthUrl = $client->createAuthUrl();
+
 if (isLoggedIn()) {
     redirect('/');
 }
@@ -111,6 +123,14 @@ include '../templates/header.php';
             <button type="submit" class="btn btn-block">Register</button>
         </div>
     </form>
+
+    <div class="social-login">
+        <p>Or sign up with</p>
+        <a href="<?php echo $googleAuthUrl; ?>" class="google-btn">
+            <img src="<?php echo SITE_URL; ?>/assets/images/google-icon.svg" alt="Google Icon">
+            Sign up with Google
+        </a>
+    </div>
     
     <p>Already have an account? <a href="<?php echo SITE_URL; ?>/pages/login.php">Login</a></p>
 </div>
