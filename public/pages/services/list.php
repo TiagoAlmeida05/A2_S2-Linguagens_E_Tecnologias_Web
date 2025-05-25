@@ -175,7 +175,6 @@ include_once '../../templates/header.php';
                 <?php endif; ?>
             </p>
         <?php else: ?>
-
             <div class="services-grid">
                 <?php foreach ($services as $service): ?>
                     <div class="service-card"
@@ -190,8 +189,52 @@ include_once '../../templates/header.php';
                     </div>
                 <?php endforeach; ?>
             </div>
-
         <?php endif; ?>
+
+        <?php
+        // Add Sales section after services grid
+        if ($showMine && $userId) {
+            // Get all transactions for the freelancer's services
+            $stmt = $db->prepare("
+                SELECT t.*, s.title as service_title, s.price, u.username as client_name, u.email as client_email
+                FROM Transactions t
+                JOIN Services s ON t.service_id = s.id
+                JOIN Users u ON t.client_id = u.id
+                WHERE s.freelancer_id = ?
+                ORDER BY t.created_at DESC
+            ");
+            $stmt->execute([$userId]);
+            $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($transactions)) {
+                echo '<h2 class="gradient-heading">Sales</h2>';
+                echo '<div class="transactions-grid">';
+                foreach ($transactions as $transaction) {
+                    $statusClass = $transaction['status'] === 'completed' ? 'completed' : 'pending';
+                    ?>
+                    <div class="transaction-card <?php echo $statusClass; ?>">
+                        <div class="transaction-status <?php echo $statusClass; ?>">
+                            <?php echo ucfirst($transaction['status']); ?>
+                        </div>
+                        <h3><?php echo htmlspecialchars($transaction['service_title']); ?></h3>
+                        <p class="transaction-client">Client: <?php echo htmlspecialchars($transaction['client_name']); ?></p>
+                        <p class="transaction-email">Email: <?php echo htmlspecialchars($transaction['client_email']); ?></p>
+                        <p class="transaction-price">Price: $<?php echo htmlspecialchars($transaction['price']); ?></p>
+                        <p class="transaction-date">Ordered: <?php echo date('M d, Y', strtotime($transaction['created_at'])); ?></p>
+                        <?php if ($transaction['status'] === 'pending'): ?>
+                            <form action="<?php echo SITE_URL; ?>/pages/services/complete_transaction.php" method="POST" class="transaction-actions">
+                                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                                <input type="hidden" name="transaction_id" value="<?php echo $transaction['id']; ?>">
+                                <button type="submit" class="btn btn-success">Mark as Completed</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                }
+                echo '</div>';
+            }
+        }
+        ?>
     </div>
 </div>
 

@@ -47,4 +47,77 @@ function getMessages() {
     
     return $messages;
 }
+
+/**
+ * Generate a CSRF token and store it in the session
+ */
+function generateCSRFToken() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * Validate a CSRF token
+ */
+function validateCSRFToken($token) {
+    if (!isset($_SESSION['csrf_token']) || !isset($token)) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+/**
+ * Validate and sanitize uploaded file
+ */
+function validateUploadedFile($file, $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'], $maxSize = 5242880) {
+    if (!isset($file['error']) || is_array($file['error'])) {
+        return false;
+    }
+
+    // Check for upload errors
+    switch ($file['error']) {
+        case UPLOAD_ERR_OK:
+            break;
+        case UPLOAD_ERR_INI_SIZE:
+        case UPLOAD_ERR_FORM_SIZE:
+            throw new RuntimeException('File size exceeds limit.');
+        case UPLOAD_ERR_PARTIAL:
+            throw new RuntimeException('File was only partially uploaded.');
+        case UPLOAD_ERR_NO_FILE:
+            throw new RuntimeException('No file was uploaded.');
+        case UPLOAD_ERR_NO_TMP_DIR:
+            throw new RuntimeException('Missing a temporary folder.');
+        case UPLOAD_ERR_CANT_WRITE:
+            throw new RuntimeException('Failed to write file to disk.');
+        case UPLOAD_ERR_EXTENSION:
+            throw new RuntimeException('A PHP extension stopped the file upload.');
+        default:
+            throw new RuntimeException('Unknown upload error.');
+    }
+
+    // Check file size
+    if ($file['size'] > $maxSize) {
+        throw new RuntimeException('File size exceeds limit.');
+    }
+
+    // Check file type
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $fileType = $finfo->file($file['tmp_name']);
+    if (!in_array($fileType, $allowedTypes)) {
+        throw new RuntimeException('Invalid file type.');
+    }
+
+    return true;
+}
+
+/**
+ * Generate a safe filename for upload
+ */
+function generateSafeFilename($originalName) {
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+    $safeName = bin2hex(random_bytes(16)) . '.' . $extension;
+    return $safeName;
+}
 ?> 

@@ -1486,7 +1486,7 @@ main {
     background-clip: text;
     color: transparent;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin: 2rem 0rem;
 }
 
 .password-section .form-control {
@@ -1769,5 +1769,90 @@ main {
 #new-user-list ul {
     overflow: visible !important;
     max-height: none !important;
-} 
+}
+
+/* Transactions Grid */
+.transactions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.transaction-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.transaction-card:hover {
+    transform: translateY(-5px);
+}
+
+.transaction-card h3 {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.transaction-client,
+.transaction-email,
+.transaction-price,
+.transaction-date {
+    margin: 0.5rem 0;
+    color: var(--secondary-light);
+}
+
+.transaction-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.transaction-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.transaction-status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.transaction-status.completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.transaction-card.completed {
+    border: 1px solid #d4edda;
+}
+
+.transaction-card.pending {
+    border: 1px solid #fff3cd;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-success:before {
+    background-color: #218838;
+    border-radius: 8px;
+}
 
