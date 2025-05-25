@@ -1,5 +1,4 @@
 <?php
-// pages/services/paid_services.php
 require_once __DIR__ . '/../../includes/config.php';
 require_once __DIR__ . '/../../includes/utils.php';
 require_once __DIR__ . '/../../includes/user.php';
